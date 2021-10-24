@@ -6,10 +6,15 @@ router.get("/example", (req, res) => {
 router.get("/all", (req, res) => {
     db.Item.find().then((items) => res.send(items));
 });
+
 router.patch("/edit", (req, res) => {
     db.Item.findByIdAndUpdate({ _id: req.body._id }, {
         newPrice: req.body.newPrice,
     }).then(result => res.send(result));
+});
+
+router.get("/barcode", (req, res) => {
+    //Search by Barcode
 });
 router.get("/item", (req, res) => {
     db.Item.find({ name: req.body.name }).then(result => res.send(result));
