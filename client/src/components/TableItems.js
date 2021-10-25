@@ -9,6 +9,10 @@ import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import { orange } from '@mui/material/colors';
 import { makeStyles } from "@material-ui/core/styles";
+import { Grid, Typography } from '@mui/material';
+
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 const useStyles = makeStyles({
     container: {
         borderRadius: "2.5% !important"
@@ -42,6 +46,7 @@ const useStyles = makeStyles({
 });
 function TableItems({ itemArray, isUpdatePriceAll, clickToUpdate }) {
     const [update, setPrice] = useState();
+
     const classes = useStyles();
     const HEADER_TITLE = ["ברקוד", "ספק", "שם המוצר", "מחיר", "תמונה", "מחיר חדש"];
     const colorHead = orange[500];
@@ -109,8 +114,12 @@ function TableItems({ itemArray, isUpdatePriceAll, clickToUpdate }) {
                             <TableCell align="center" className={classes.row}>
                                 {item.image ? <img src={item.image} className={classes.image} alt={item.name} /> : null}
                             </TableCell>
-                            <TableCell align="center" className={classes.row}>
-                                {item.newPrice}
+                            <TableCell align="left" className={classes.row}>
+                                {item.newPrice === 0 ? item.newPrice : <span>
+                                    <span style={{ float: "right" }}>
+                                        {Math.floor((item.newPrice * 100) / item.price) - 100 + "%" < 0 ? <ArrowDropDownIcon style={{ float: "right", backgroundColor: "blue" }} /> : <ArrowDropUpIcon style={{ float: "right", backgroundColor: "red" }} />}
+                                    </span>
+                                    {item.newPrice}</span>}
                             </TableCell>
                         </TableRow>
                     ))}

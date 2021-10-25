@@ -7,9 +7,12 @@ import SearchProduct from './components/SearchProduct';
 import axios from "axios";
 import UpdatePrice from './components/UpdatePrice';
 
+
+import { Grid } from '@mui/material';
 function App() {
   const [itemArray, setItemArray] = useState([]);
   const [isUpdatePriceAll, setIsUpdatePriceAll] = useState(false);
+
   useEffect(() => {
     displayProducts();
   }, [])
