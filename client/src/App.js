@@ -8,8 +8,6 @@ import axios from "axios";
 import UpdatePrice from './components/UpdatePrice';
 
 function App() {
-
-  const [searchItem, setSearchItem] = useState("");
   const [itemArray, setItemArray] = useState([]);
   const [isUpdatePriceAll, setIsUpdatePriceAll] = useState(false);
   useEffect(() => {
@@ -51,7 +49,12 @@ function App() {
     setIsUpdatePriceAll(a => !a);
   }
 
-
+  const clickToUpdate = async (id, update) => {
+    const parse = parseInt(id)
+    await axios.patch(`/edit/${parse}`, { newPrice: update });
+    displayProducts();
+    setIsUpdatePriceAll(a => !a);
+  }
 
 
   return (
@@ -66,7 +69,7 @@ function App() {
         <SearchProduct search={"חיפוש מוצר באמצעות ספק"} dataSearch={"3"} sortBy={sortBy} />
       </Container>
       <Container fixed>
-        <TableItems itemArray={itemArray} isUpdatePriceAll={isUpdatePriceAll} />
+        <TableItems itemArray={itemArray} isUpdatePriceAll={isUpdatePriceAll} clickToUpdate={clickToUpdate} />
       </Container>
     </div >
   );

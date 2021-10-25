@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -40,7 +40,8 @@ const useStyles = makeStyles({
         cursor: "pointer !important"
     }
 });
-function TableItems({ itemArray, isUpdatePriceAll }) {
+function TableItems({ itemArray, isUpdatePriceAll, clickToUpdate }) {
+    const [update, setPrice] = useState();
     const classes = useStyles();
     const HEADER_TITLE = ["ברקוד", "ספק", "שם המוצר", "מחיר", "תמונה", "מחיר חדש"];
     const colorHead = orange[500];
@@ -55,6 +56,13 @@ function TableItems({ itemArray, isUpdatePriceAll }) {
         dataObject = [...new Set([...sortByImage, ...itemArray])];
     }
 
+    const submit = (id) => {
+        clickToUpdate(id, update);
+    }
+
+    const updatePrice = (e) => {
+        setPrice(e.target.value);
+    }
     return (
 
         <TableContainer component={Paper} className={classes.container}>
@@ -83,13 +91,15 @@ function TableItems({ itemArray, isUpdatePriceAll }) {
                             <TableCell align="center" className={classes.row}>{item.supplier}</TableCell>
                             <TableCell align="center" className={classes.row}>{item.name}</TableCell>
                             {isUpdatePriceAll ? <TableCell align="right" className={classes.row} style={{ display: "flex" }}>
-                                <button className={classes.btn}>לעדכן</button>
+                                <button className={classes.btn} onClick={() => {
+                                    submit(item._id);
+                                }}>לעדכן</button>
                                 <TextField
-
                                     id="outlined-number"
+                                    defaultValue={item.price}
                                     type="number"
-                                    value={item.price}
                                     style={{ width: "100px" }}
+                                    onChange={updatePrice}
                                 />
 
 

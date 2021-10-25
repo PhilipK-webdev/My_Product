@@ -7,8 +7,8 @@ router.get("/all", (req, res) => {
     db.Item.find({}).then((items) => res.send(items));
 });
 
-router.patch("/edit", (req, res) => {
-    db.Item.findByIdAndUpdate({ _id: req.body._id }, {
+router.patch("/edit/:id", (req, res) => {
+    db.Item.findByIdAndUpdate({ _id: req.params.id }, {
         newPrice: req.body.newPrice,
     }).then(result => res.send(result));
 });
