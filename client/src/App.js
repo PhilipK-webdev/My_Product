@@ -5,12 +5,13 @@ import Container from '@mui/material/Container';
 import TableItems from './components/TableItems';
 import SearchProduct from './components/SearchProduct';
 import axios from "axios";
+import UpdatePrice from './components/UpdatePrice';
 
 function App() {
 
   const [searchItem, setSearchItem] = useState("");
   const [itemArray, setItemArray] = useState([]);
-
+  const [isUpdatePriceAll, setIsUpdatePriceAll] = useState(false);
   useEffect(() => {
     displayProducts();
   }, [])
@@ -21,24 +22,21 @@ function App() {
       .then(({ data }) => setItemArray(data))
       .catch((err) => console.log(err));
   }
-  const sortBy = (itemName, dataSearch) => {
-
-    if (itemName != "") {
+  const sortBy = async (itemName, dataSearch) => {
+    if (itemName != "" && itemName.length > 1) {
       switch (dataSearch) {
         case "1":
           const parse = parseInt(itemName)
-          axios.get(`/barcode/${parse}`).then(({ data }) => {
-            setItemArray(data)
-
-          }).catch(err => console.log(err));
+          const response = await axios.get(`/barcode/${parse}`);
+          setItemArray(response.data);
           break;
         case "2":
-          axios.get(`/item/${itemName} `).then(({ data }) => {
-            setItemArray(data);
-          }).catch(err => console.log(err));
+          const { data } = await axios.get(`/item/${itemName}`);
+          setItemArray(data);
           break;
         case "3":
-          axios.get(`/sup/${itemName} `).then(({ data }) => setItemArray(data)).catch((err) => console.log(err));
+          const res = await axios.get(`/sup/${itemName} `);
+          setItemArray(res.data);
           break;
         default:
           break;
@@ -47,11 +45,20 @@ function App() {
       displayProducts();
     }
   }
+
+  const updatePrice = (e) => {
+    e.preventDefault();
+    setIsUpdatePriceAll(a => !a);
+  }
+
+
+
+
   return (
     <div className="App">
       <Header />
-      <Container fixed style={{ display: "flex" }}>
-        {/* Add info regarding update price by supllier or at overall. */}
+      <Container fixed style={{ display: "flex", justifyContent: 'center' }}>
+        <UpdatePrice updatePrice={updatePrice} />
       </Container>
       <Container fixed style={{ display: "flex" }}>
         <SearchProduct search={"חיפוש עם ברקוד"} dataSearch={"1"} sortBy={sortBy} />
@@ -59,7 +66,7 @@ function App() {
         <SearchProduct search={"חיפוש מוצר באמצעות ספק"} dataSearch={"3"} sortBy={sortBy} />
       </Container>
       <Container fixed>
-        <TableItems itemArray={itemArray} />
+        <TableItems itemArray={itemArray} isUpdatePriceAll={isUpdatePriceAll} />
       </Container>
     </div >
   );

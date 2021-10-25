@@ -6,7 +6,6 @@ import Typography from '@mui/material/Typography';
 function SearchProduct({ search, dataSearch, sortBy }) {
     const displayBySearch = (e) => {
         sortBy(e.target.value, dataSearch);
-
     }
     return (
         <Grid container mt-2="true">

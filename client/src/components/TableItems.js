@@ -18,21 +18,29 @@ const useStyles = makeStyles({
         borderBottom: "1px solid black !important",
         fontWeight: "bold !important",
         fontSize: "25px !important",
-        fontFamily: "cursive !important"
+        fontFamily: "cursive !important",
+
     },
     row: {
         borderRight: "1px solid black !important",
         borderBottom: "1px solid black !important",
         fontWeight: "bold !important",
         fontSize: "20px !important",
-        fontFamily: "cursive !important"
+        fontFamily: "cursive !important",
     },
     image: {
         width: "50px",
         height: "50px"
+    },
+    btn: {
+        fontSize: "15px",
+        fontWeight: "bold !important",
+        fontSize: "20px !important",
+        fontFamily: "cursive !important",
+        cursor: "pointer !important"
     }
 });
-function TableItems({ itemArray }) {
+function TableItems({ itemArray, isUpdatePriceAll }) {
     const classes = useStyles();
     const HEADER_TITLE = ["ברקוד", "ספק", "שם המוצר", "מחיר", "תמונה", "מחיר חדש"];
     const colorHead = orange[500];
@@ -74,14 +82,20 @@ function TableItems({ itemArray }) {
                             </TableCell>
                             <TableCell align="center" className={classes.row}>{item.supplier}</TableCell>
                             <TableCell align="center" className={classes.row}>{item.name}</TableCell>
-                            <TableCell align="right" className={classes.row}>
+                            {isUpdatePriceAll ? <TableCell align="right" className={classes.row} style={{ display: "flex" }}>
+                                <button className={classes.btn}>לעדכן</button>
                                 <TextField
 
                                     id="outlined-number"
                                     type="number"
                                     value={item.price}
                                     style={{ width: "100px" }}
-                                /></TableCell>
+                                />
+
+
+                            </TableCell> :
+
+                                <TableCell align="right" className={classes.row}>{item.price}</TableCell>}
                             <TableCell align="center" className={classes.row}>
                                 {item.image ? <img src={item.image} className={classes.image} alt={item.name} /> : null}
                             </TableCell>
