@@ -3,10 +3,10 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-function SearchProduct({ search, dataSearch }) {
-    const sortBy = (e) => {
-        console.log(e.target.value);
-        console.log(dataSearch);
+function SearchProduct({ search, dataSearch, sortBy }) {
+    const displayBySearch = (e) => {
+        sortBy(e.target.value, dataSearch);
+
     }
     return (
         <Grid container mt-2="true">
@@ -32,10 +32,10 @@ function SearchProduct({ search, dataSearch }) {
                         m: 1,
                     }}
                 >
-                    <TextField color={"primary"} onChange={sortBy} />
+                    <TextField color={"primary"} onChange={displayBySearch} />
                 </Box>
-
             </Grid>
+
         </Grid>
     );
 }

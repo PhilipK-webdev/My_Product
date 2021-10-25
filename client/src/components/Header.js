@@ -26,6 +26,7 @@ function Header() {
                     <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
                         ניהול מוצרים
                     </Typography>
+
                 </Toolbar>
             </AppBar>
         </Box>

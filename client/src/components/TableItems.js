@@ -6,7 +6,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import items from "../items.json";
+import TextField from '@mui/material/TextField';
 import { orange } from '@mui/material/colors';
 import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles({
@@ -32,19 +32,21 @@ const useStyles = makeStyles({
         height: "50px"
     }
 });
-function TableItems() {
-
-
+function TableItems({ itemArray }) {
     const classes = useStyles();
     const HEADER_TITLE = ["ברקוד", "ספק", "שם המוצר", "מחיר", "תמונה", "מחיר חדש"];
     const colorHead = orange[500];
     const colorCell = orange[200];
-    const sortByImage = items.filter((item) => {
-        if (item.image != "") {
-            return item;
-        }
-    })
-    const dataObject = [...new Set([...sortByImage, ...items])];
+    let dataObject = [];
+    if (itemArray.length !== 0) {
+        const sortByImage = itemArray.filter((item) => {
+            if (item.image != "") {
+                return item;
+            }
+        })
+        dataObject = [...new Set([...sortByImage, ...itemArray])];
+    }
+
     return (
 
         <TableContainer component={Paper} className={classes.container}>
@@ -72,16 +74,26 @@ function TableItems() {
                             </TableCell>
                             <TableCell align="center" className={classes.row}>{item.supplier}</TableCell>
                             <TableCell align="center" className={classes.row}>{item.name}</TableCell>
-                            <TableCell align="center" className={classes.row}>{item.price}</TableCell>
+                            <TableCell align="right" className={classes.row}>
+                                <TextField
+
+                                    id="outlined-number"
+                                    type="number"
+                                    value={item.price}
+                                    style={{ width: "100px" }}
+                                /></TableCell>
                             <TableCell align="center" className={classes.row}>
                                 {item.image ? <img src={item.image} className={classes.image} alt={item.name} /> : null}
                             </TableCell>
-                            <TableCell align="center" className={classes.row}>{item.newPrice}</TableCell>
+                            <TableCell align="center" className={classes.row}>
+                                {item.newPrice}
+                            </TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
             </Table>
         </TableContainer>
+
     );
 }
 
