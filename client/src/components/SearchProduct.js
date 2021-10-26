@@ -29,6 +29,8 @@ function SearchProduct({ search, dataSearch, sortBy }) {
                         maxWidth: '100%',
                         backgroundColor: "white",
                         m: 1,
+                        borderRadius: '15px',
+                        marginTop: "15px"
                     }}
                 >
                     <TextField color={"primary"} onChange={displayBySearch} />

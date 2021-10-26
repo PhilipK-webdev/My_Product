@@ -8,9 +8,11 @@ import axios from "axios";
 import UpdatePrice from './components/UpdatePrice';
 function App() {
   const [itemArray, setItemArray] = useState([]);
+  const [supplierArray, setSupplierArray] = useState([]);
   const [isUpdatePriceAll, setIsUpdatePriceAll] = useState(false);
-
-
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   useEffect(() => {
     displayProducts();
   }, [])
@@ -35,7 +37,11 @@ function App() {
           break;
         case "3":
           const res = await axios.get(`/sup/${itemName} `);
-          setItemArray(res.data);
+          if (open) {
+            setSupplierArray(res.data);
+          } else {
+            setItemArray(res.data);
+          }
           break;
         default:
           break;
@@ -44,7 +50,6 @@ function App() {
       displayProducts();
     }
   }
-
   const updatePrice = (e) => {
     e.preventDefault();
     setIsUpdatePriceAll(a => !a);
@@ -55,6 +60,7 @@ function App() {
     const upOrDown = calculatePrecentage(update, after, discount)
     await axios.patch(`/edit/${parse}`, { newPrice: update, discount: upOrDown });
     displayProducts();
+    setSupplierArray([]);
     setIsUpdatePriceAll(a => !a);
   }
 
@@ -67,7 +73,17 @@ function App() {
     <div className="App">
       <Header />
       <Container fixed style={{ display: "flex", justifyContent: 'center' }}>
-        <UpdatePrice updatePrice={updatePrice} />
+        <UpdatePrice
+          updatePrice={updatePrice}
+          sortBy={sortBy}
+          handleOpen={handleOpen}
+          handleClose={handleClose}
+          open={open}
+          itemArray={supplierArray}
+          isUpdatePriceAll={isUpdatePriceAll}
+          clickToUpdate={clickToUpdate}
+        />
+
       </Container>
       <Container fixed style={{ display: "flex" }}>
         <SearchProduct search={"חיפוש עם ברקוד"} dataSearch={"1"} sortBy={sortBy} />
