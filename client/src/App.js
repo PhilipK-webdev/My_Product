@@ -6,11 +6,13 @@ import TableItems from './components/TableItems';
 import SearchProduct from './components/SearchProduct';
 import axios from "axios";
 import UpdatePrice from './components/UpdatePrice';
+import AlertMessage from './components/components/AlertMessage';
 function App() {
   const [itemArray, setItemArray] = useState([]);
   const [supplierArray, setSupplierArray] = useState([]);
   const [isUpdatePriceAll, setIsUpdatePriceAll] = useState(false);
   const [open, setOpen] = useState(false);
+  const [status, setStatusBase] = useState("");
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   useEffect(() => {
@@ -27,9 +29,12 @@ function App() {
     if (itemName != "" && itemName.length > 1) {
       switch (dataSearch) {
         case "1":
-          const parse = parseInt(itemName)
-          const response = await axios.get(`/barcode/${parse}`);
-          setItemArray(response.data);
+          let isNum = /^\d+$/.test(itemName);
+          if (isNum) {
+            const parse = parseInt(itemName)
+            const response = await axios.get(`/barcode/${parse}`);
+            setItemArray(response.data);
+          }
           break;
         case "2":
           const { data } = await axios.get(`/item/${itemName}`);
@@ -58,10 +63,16 @@ function App() {
   const clickToUpdate = async (id, update, after, discount) => {
     const parse = parseInt(id);
     const upOrDown = calculatePrecentage(update, after, discount)
-    await axios.patch(`/edit/${parse}`, { newPrice: update, discount: upOrDown });
-    displayProducts();
-    setSupplierArray([]);
-    setIsUpdatePriceAll(a => !a);
+    const response = await axios.patch(`/edit/${parse}`, { newPrice: update, discount: upOrDown });
+    if (response.status === 200) {
+      displayProducts();
+      setSupplierArray([]);
+      setIsUpdatePriceAll(a => !a);
+      setStatusBase({ msg: "Success - Update Complete", key: Math.random() });
+    } else {
+      setStatusBase({ msg: "ERROR", key: Math.random() });
+    }
+
   }
 
   const calculatePrecentage = (before, after, str) => {
@@ -97,6 +108,7 @@ function App() {
           clickToUpdate={clickToUpdate}
         />
       </Container>
+      {status ? <AlertMessage message={status.msg} key={status.key} /> : null}
     </div >
   );
 }

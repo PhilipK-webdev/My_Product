@@ -14,7 +14,8 @@ const useStyles = makeStyles({
         marginTop: "5% !important",
         marginBottom: "5% !important",
         fontSize: "20px !important",
-        paddingBottom: "15px !important",
+        paddingBottom: "10px !important",
+        paddingTop: "10px !important",
         borderRadius: "15px !important"
     }
 });

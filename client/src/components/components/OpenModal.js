@@ -15,7 +15,8 @@ const useStyles = makeStyles({
         marginTop: "5% !important",
         marginBottom: "5% !important",
         fontSize: "20px !important",
-        paddingBottom: "15px !important",
+        paddingBottom: "10px !important",
+        paddingTop: "10px !important",
         borderRadius: "15px !important"
 
     },
@@ -46,7 +47,6 @@ function OpenModal({ sortBy, handleOpen, handleClose, open, itemArray,
             <Button variant="outlined" className={classes.button} onClick={handleOpen}>
                 עדכון מחיר ע"י הספק
             </Button>
-
             <Modal
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"
@@ -69,19 +69,13 @@ function OpenModal({ sortBy, handleOpen, handleClose, open, itemArray,
                                     לעדכן מחירים
                                 </Button>
                             </Grid>
-
                         </Grid>
                         <TableItems
                             itemArray={itemArray}
                             isUpdatePriceAll={isUpdatePriceAll}
-                            clickToUpdate={clickToUpdate}
-                        />
-
+                            clickToUpdate={clickToUpdate} />
                     </Box>
-
                 </Fade>
-
-
             </Modal>
         </div>
     );

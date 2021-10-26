@@ -26,7 +26,8 @@ const useStyles = makeStyles({
         fontWeight: "bold !important",
         fontSize: "20px !important",
         fontFamily: "cursive !important",
-        cursor: "pointer !important"
+        cursor: "pointer !important",
+        borderRadius: "10px",
     },
     spanCurrency: {
         float: "left"
@@ -108,7 +109,7 @@ function TableBodyItem({ itemArray, isUpdatePriceAll, clickToUpdate, }) {
                     </TableCell>
                     <TableCell align="right" className={classes.row}>
                         {item.newPrice === 0 && item.discount === "" ? null : <Grid item className={classes.priceDiv}>
-                            <span>{item.newPrice}</span>
+                            <span>{item.newPrice} <span className={classes.spanCurrency}>שקל</span></span>
                             <span style={{ backgroundColor: item.discount === "down" ? colorDown : colorUp }}>{item.precentage + "" + item.discount}
                             </span>
                         </Grid>}
