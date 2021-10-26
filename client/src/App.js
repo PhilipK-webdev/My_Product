@@ -6,12 +6,10 @@ import TableItems from './components/TableItems';
 import SearchProduct from './components/SearchProduct';
 import axios from "axios";
 import UpdatePrice from './components/UpdatePrice';
-
-
-import { Grid } from '@mui/material';
 function App() {
   const [itemArray, setItemArray] = useState([]);
   const [isUpdatePriceAll, setIsUpdatePriceAll] = useState(false);
+
 
   useEffect(() => {
     displayProducts();
@@ -52,14 +50,19 @@ function App() {
     setIsUpdatePriceAll(a => !a);
   }
 
-  const clickToUpdate = async (id, update) => {
-    const parse = parseInt(id)
-    await axios.patch(`/edit/${parse}`, { newPrice: update });
+  const clickToUpdate = async (id, update, after, discount) => {
+    const parse = parseInt(id);
+    const upOrDown = calculatePrecentage(update, after, discount)
+    await axios.patch(`/edit/${parse}`, { newPrice: update, discount: upOrDown });
     displayProducts();
     setIsUpdatePriceAll(a => !a);
   }
 
-
+  const calculatePrecentage = (before, after, str) => {
+    const result = Math.floor((after * 100) / before);
+    result - 100 > 0 ? str += "up" : str += "down";
+    return str;
+  }
   return (
     <div className="App">
       <Header />
@@ -72,7 +75,11 @@ function App() {
         <SearchProduct search={"חיפוש מוצר באמצעות ספק"} dataSearch={"3"} sortBy={sortBy} />
       </Container>
       <Container fixed>
-        <TableItems itemArray={itemArray} isUpdatePriceAll={isUpdatePriceAll} clickToUpdate={clickToUpdate} />
+        <TableItems
+          itemArray={itemArray}
+          isUpdatePriceAll={isUpdatePriceAll}
+          clickToUpdate={clickToUpdate}
+        />
       </Container>
     </div >
   );

@@ -10,6 +10,7 @@ router.get("/all", (req, res) => {
 router.patch("/edit/:id", (req, res) => {
     db.Item.findByIdAndUpdate({ _id: req.params.id }, {
         newPrice: req.body.newPrice,
+        discount: req.body.discount
     }).then(result => res.send(result));
 });
 

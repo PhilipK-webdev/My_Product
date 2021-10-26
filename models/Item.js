@@ -26,7 +26,7 @@ const ItemSchema = new Schema({
         type: String
     },
     editable: { type: String },
-    discount: { type: String }
+    discount: { type: String },
 });
 
 const Item = mongoose.model("Item", ItemSchema);
