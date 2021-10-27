@@ -7,13 +7,25 @@ import SearchProduct from './components/SearchProduct';
 import axios from "axios";
 import UpdatePrice from './components/UpdatePrice';
 import AlertMessage from './components/components/AlertMessage';
+import { Grid } from '@mui/material';
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles({
+  containerPrice: {
+    display: "flex !important",
+    justifyContent: 'center !important',
+  },
+  containerSearch: {
+    display: "flex !important"
+  }
+
+});
 function App() {
   const [itemArray, setItemArray] = useState([]);
   const [supplierArray, setSupplierArray] = useState([]);
   const [isUpdatePriceAll, setIsUpdatePriceAll] = useState(false);
   const [open, setOpen] = useState(false);
   const [status, setStatusBase] = useState("");
-
+  const classes = useStyles();
   useEffect(() => {
     displayProducts();
   }, [])
@@ -86,9 +98,19 @@ function App() {
     setSupplierArray([]);
   };
   return (
-    <div className="App">
-      <Header />
-      <Container fixed style={{ display: "flex", justifyContent: 'center' }}>
+    <div className="App" >
+      <Container className={classes.containerPrice}>
+        <Grid container>
+          <Grid item md={2} >
+          </Grid>
+          <Grid item xs={12} md={12} lg={12} xl={12}>
+            <Header />
+          </Grid>
+          <Grid item md={2} >
+          </Grid>
+        </Grid>
+      </Container>
+      <Container fixed className={classes.containerPrice}>
         <UpdatePrice
           updatePrice={updatePrice}
           sortBy={sortBy}
@@ -101,17 +123,19 @@ function App() {
         />
 
       </Container>
-      <Container fixed style={{ display: "flex" }}>
+      <Container fixed className={classes.containerSearch}>
         <SearchProduct search={"חיפוש עם ברקוד"} dataSearch={"1"} sortBy={sortBy} />
-        <SearchProduct search={"חיפוש מוצר על פי שם"} dataSearch={"2"} sortBy={sortBy} />
-        <SearchProduct search={"חיפוש מוצר באמצעות ספק"} dataSearch={"3"} sortBy={sortBy} />
+        <SearchProduct search={"חיפוש על פי שם"} dataSearch={"2"} sortBy={sortBy} />
+        <SearchProduct search={"חיפוש  באמצעות ספק"} dataSearch={"3"} sortBy={sortBy} />
       </Container>
       <Container fixed>
-        <TableItems
-          itemArray={itemArray}
-          isUpdatePriceAll={isUpdatePriceAll}
-          clickToUpdate={clickToUpdate}
-        />
+        <Grid item >
+          <TableItems
+            itemArray={itemArray}
+            isUpdatePriceAll={isUpdatePriceAll}
+            clickToUpdate={clickToUpdate}
+          />
+        </Grid>
       </Container>
       {status ? <AlertMessage message={status.msg} key={status.key} /> : null}
     </div >

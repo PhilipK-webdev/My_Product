@@ -8,7 +8,7 @@ import TableBodyItem from './components/TableBodyItem';
 
 const useStyles = makeStyles({
     container: {
-        borderRadius: "2.5% !important"
+        borderRadius: "1.5% !important"
     }
 });
 
@@ -17,7 +17,7 @@ function TableItems({ itemArray, isUpdatePriceAll, clickToUpdate }) {
     const classes = useStyles();
     return (
         <TableContainer component={Paper} className={classes.container}>
-            <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+            <Table sx={{ maxWidth: "100%" }} size="small" aria-label="a dense table">
                 <HeadItem />
                 <TableBodyItem
                     itemArray={itemArray}

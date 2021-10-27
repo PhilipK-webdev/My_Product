@@ -15,7 +15,7 @@ function Header() {
     });
     const classes = useStyles();
     return (
-        <Box sx={{ flexGrow: 1 }}>
+        <Box sx={{ flexGrow: 2, marginTop: "1%" }}>
             <AppBar position="static">
                 <Toolbar>
                     <Link href="#">
@@ -34,3 +34,4 @@ function Header() {
 }
 
 export default Header
+

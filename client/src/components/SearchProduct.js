@@ -8,7 +8,7 @@ function SearchProduct({ search, dataSearch, sortBy }) {
         sortBy(e.target.value, dataSearch);
     }
     return (
-        <Grid container mt-2="true">
+        <Grid container >
             <Grid item>
                 <Box
                     sx={{
@@ -36,7 +36,6 @@ function SearchProduct({ search, dataSearch, sortBy }) {
                     <TextField color={"primary"} onChange={displayBySearch} />
                 </Box>
             </Grid>
-
         </Grid>
     );
 }
