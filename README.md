@@ -23,6 +23,7 @@ Our application was built with the below list backend packages/libraries
 - Express
 - Mongoose
 - MongoDB
+- Atlas
 
 For the Frontend packages/libraries we used
 
@@ -30,9 +31,9 @@ For the Frontend packages/libraries we used
 - Material UI
 
 
-<!-- ## Deploy
+## Deploy
 
-Heroku: https://group4-mern-tracker.herokuapp.com/ -->
+Heroku: https://mernproductapp.herokuapp.com/
 
 ## Contributors
 

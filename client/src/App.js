@@ -13,8 +13,7 @@ function App() {
   const [isUpdatePriceAll, setIsUpdatePriceAll] = useState(false);
   const [open, setOpen] = useState(false);
   const [status, setStatusBase] = useState("");
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+
   useEffect(() => {
     displayProducts();
   }, [])
@@ -80,6 +79,12 @@ function App() {
     result - 100 > 0 ? str += "up" : str += "down";
     return str;
   }
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => {
+    setOpen(false)
+    setSupplierArray([]);
+  };
   return (
     <div className="App">
       <Header />
